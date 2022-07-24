@@ -1,0 +1,28 @@
+name: Wordle
+version: 0.0.1
+main: tpguy825\Wordle\Main
+api: 4.6.1
+src-namespace-prefix: tpguy825\Wordle
+
+commands:
+  wordle:
+    description: Allows you to play wordle in Minecraft!
+    usage: "/wordle <start|stop|guess|g>"
+    permission: wordle.command.wordle
+  wd:
+    description: Allows you to play wordle in Minecraft!
+    usage: "/wd <start|stop|guess|g>"
+    permission: wordle.command.wordle
+permissions:
+  wordle.command.wordle:
+    description: "Allows the user to run the /wordle command"
+    default: true
+  wordle.command.wordle.start:
+    description: "Allows the user to use the /wordle start command"
+    default: true
+  wordle.command.wordle.stop:
+    description: "Allows the user to use the /wordle stop command"
+    default: true
+  wordle.command.wordle.guess:
+    description: "Allows the user to use the /wordle guess or /wordle g command"
+    default: true
