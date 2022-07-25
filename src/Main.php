@@ -50,13 +50,15 @@ class Main extends PluginBase {
                     if(isset($args[0])) {
                         if($args[0] === "start") {
                             if($sender->hasPermission("wordle.command.wordle.start")) {
-                                $this->games[$sender] = new Game($sender, $this);
+                                $this->games[$sender->getName()] = new Game($sender, $this);
+                                $this->word = $this->generateword($sender);
+                                $player->sendMessage($plugin->prefix . TextFormat::GREEN."Wordle started! Make a guess using /wordle guess <word>");
                             } else {
                                 $sender->sendMessage($this->prefix . TextFormat::RED."You don't have permission to use this command!");
                             }
                         } elseif($args[0] === "stop") {
                             if($sender->hasPermission("wordle.command.wordle.stop")) {
-                                unset($this->games[$sender]);
+                                unset($this->games[$sender->getName()]);
                                 $sender->sendMessage($this->prefix . TextFormat::GREEN."Wordle stopped!");
                             } else {
                                 $sender->sendMessage($this->prefix . TextFormat::RED."You don't have permission to use this command!");
@@ -94,7 +96,7 @@ class Main extends PluginBase {
         while(count($lettercount) < 5) {
             $lettercount = array_unique($this->getwordasarray());
         }
-        $this->games[$sender]->setword(implode($lettercount));
+        $this->games[$sender->getName()]->setword(implode($lettercount));
         $this->getLogger()->info($this->prefix . TextFormat::GREEN.$sender->getName()."'s Word: " . implode($lettercount));
     }
 
@@ -104,10 +106,10 @@ class Main extends PluginBase {
 
     public function guess(string $guess, Player $sender) {
         if(strlen($guess) === 5) {
-            if($this->games[$sender]->isplaying()) {
-                $game = $this->games[$sender];
+            if($this->games[$sender->getName()]->isplaying()) {
+                $game = $this->games[$sender->getName()];
                 if($game->tries < 6) {
-                    if($guess === $this->games[$sender]->getWord()) {
+                    if($guess === $this->games[$sender->getName()]->getWord()) {
                         $sender->sendMessage($this->prefix . TextFormat::GREEN."You guessed the word! It was " . $game->word);
                         $sender->sendMessage($this->prefix . TextFormat::GREEN."It took you " . $game->tries . " tries!");
                         $this->getLogger()->info($this->prefix . TextFormat::GREEN."Player " . $sender->getName() . " guessed the word! It was " . $game->word);
@@ -118,13 +120,13 @@ class Main extends PluginBase {
                         $game->full = str_replace(Main::grey, Main::cgrey, $game->full);
                         $this->getLogger()->info($this->prefix . TextFormat::GREEN."Full guesses: " . $game->full);
                         unset($game);
-                        unset($this->games[$sender]);
+                        unset($this->games[$sender->getName()]);
                     } else {
                         $game->tries++;
                         if($game->tries === 6) {
                             $sender->sendMessage($this->prefix . TextFormat::RED."You lost! The word was " . $game->word);
                             unset($game);
-                            unset($this->games[$sender]);
+                            unset($this->games[$sender->getName()]);
                         } else {
                             $guess = str_split($guess);
                             $word = str_split($game->word);
@@ -149,7 +151,7 @@ class Main extends PluginBase {
                 } else {
                     $sender->sendMessage($this->prefix . TextFormat::RED."You lost! The word was " . $game->word);
                     unset($game);
-                    unset($this->games[$sender]);
+                    unset($this->games[$sender->getName()]);
                 }
             } else {
                 $sender->sendMessage($this->prefix . TextFormat::RED."Not playing! Start a game using /wordle start");

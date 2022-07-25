@@ -13,10 +13,8 @@ class Game {
 
     public function __construct(Player $player, Main $plugin) {
         $this->playing = true;
-        $this->word = $plugin->generateword($player);
         $this->tries = 0;
         $this->full = "";
-        $player->sendMessage($plugin->prefix . TextFormat::GREEN."Wordle started! Make a guess using /wordle guess <word>");
     }
 
     public function isPlaying(): bool {
