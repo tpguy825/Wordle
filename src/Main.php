@@ -52,7 +52,7 @@ class Main extends PluginBase {
                             if($sender->hasPermission("wordle.command.wordle.start")) {
                                 $this->games[$sender->getName()] = new Game($sender, $this);
                                 $this->word = $this->generateword($sender);
-                                $player->sendMessage($plugin->prefix . TextFormat::GREEN."Wordle started! Make a guess using /wordle guess <word>");
+                                $sender->sendMessage($this->prefix . TextFormat::GREEN."Wordle started! Make a guess using /wordle guess <word>");
                             } else {
                                 $sender->sendMessage($this->prefix . TextFormat::RED."You don't have permission to use this command!");
                             }
