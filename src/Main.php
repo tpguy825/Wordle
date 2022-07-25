@@ -40,7 +40,7 @@ class Main extends PluginBase {
     public function onEnable(): void {
         $this->getLogger()->info($this->prefix . TextFormat::GREEN."Enabled!");
         $this->getLogger()->info($this->prefix . TextFormat::GREEN."Version: " . $this->version);
-        $this->list = explode("\n", Internet::getURL("https://raw.githubusercontent.com/tpguy825/Wordle/main/words")->getBody());
+        $this->list = explode("\n", Internet::getURL("https://raw.githubusercontent.com/tpguy825/Wordle/master/words")->getBody());
     }
 
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
