@@ -143,7 +143,7 @@ class Main extends PluginBase {
                                     $result .= TextFormat::GRAY.$letter." ";
                                 }
                             }
-                            $sender->sendMessage($this->prefix . TextFormat::GREEN."You guessed: ".$result);
+                            $sender->sendMessage($this->prefix . TextFormat::GREEN."You guessed: ".TextFormat::BOLD.$result);
                             $sender->sendMessage($this->prefix . TextFormat::GREEN."You have " . (6 - $game->tries) . " attempts left!");
                             $game->full .= "\n".implode($guess)."\n$result";
                         }
