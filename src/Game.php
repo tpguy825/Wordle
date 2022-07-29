@@ -2,8 +2,8 @@
 
 namespace tpguy825\Wordle;
 
+use pocketmine\console\ConsoleCommandSender;
 use pocketmine\player\Player;
-use pocketmine\utils\TextFormat;
 
 class Game {
     public string $word = "";
@@ -11,7 +11,7 @@ class Game {
     public int $tries = 0;
     public string $full = "";
 
-    public function __construct(Player $player, Main $plugin) {
+    public function __construct(Player|ConsoleCommandSender $player, Main $plugin) {
         $this->playing = true;
         $this->tries = 0;
         $this->full = "";
